@@ -41,12 +41,20 @@ except URLError as e:
 # normalize the json data in tbl format
 
 # display the normalized data
+def get_fruit_load_list():
+   with my_cnx.cursor() as my_cur:
+      my_cur.execute("select * from fruit_load_list")
+      return my_cur.fetchall()
 
 fruit_choice = streamlit.text_input('What fruit would you like information about?','Jackfruit')
 streamlit.stop()
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("insert into fruit_load_list values ('from streamlit')")
-my_data_row = my_cur.fetchall()
-streamlit.text("Table data")
-streamlit.text(my_data_row)
+
+if streamlit.button("Get Fruit load list"):
+   my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+   my_data_rows=get_fruit_load_list()
+   streamlit.dataframe(my_data_rows)
+   
+
+
+
+
