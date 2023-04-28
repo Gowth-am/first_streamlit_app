@@ -46,8 +46,7 @@ def get_fruit_load_list():
       my_cur.execute("select * from fruit_load_list")
       return my_cur.fetchall()
 
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Jackfruit')
-streamlit.stop()
+
 
 if streamlit.button("Get Fruit load list"):
    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
